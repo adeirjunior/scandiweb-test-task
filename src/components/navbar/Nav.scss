@@ -1,0 +1,33 @@
+#navbarSty{
+    border-bottom: solid 5px #EF476F;
+    box-sizing: border-box;
+    padding-top: 3em;
+    
+    .container .navbar-brand{
+        font-size: 3rem;
+        color: #EF476F;
+        user-select: none;
+    }
+  }
+
+@media only screen and (max-width: 992px) {
+    #navbarSty .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+    }
+    
+}
+@media only screen and (max-width: 766px) {
+    #navbarSty .container {
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+
+        .navbar-brand{
+            margin-bottom: 1em;
+        }
+    }
+}
