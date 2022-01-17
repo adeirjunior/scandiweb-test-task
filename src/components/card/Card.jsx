@@ -11,7 +11,8 @@ function CardBody() {
 
 
     return (
-        <Card className='' style={{color: 'white',backgroundColor: '#EF476F', border: 'solid 5px #EF476F'}}>
+        <Card style={{color: 'white',backgroundColor: '#EF476F', border: 'solid 5px #EF476F', marginBottom: '1em'}}>
+            <Check type='checkbox'/>
             <Card.Body>
             Card Test
             </Card.Body>

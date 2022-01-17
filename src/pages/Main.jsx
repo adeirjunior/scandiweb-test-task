@@ -7,8 +7,8 @@ function Main() {
     return (
         <>
             <Navigator /> 
-            <Container style={{minHeight: '70vh', padding: '2em 0'}}>
-                <CardBody/>
+            <Container style={{minHeight: '72.5vh', padding: '2em 0'}}>
+            <CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/><CardBody/>
             </Container>
         </>
     )
