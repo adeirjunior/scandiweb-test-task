@@ -31,7 +31,6 @@ const Btn = styled.button`
     `}
 
 `
-
 function Button(props) {
     return (
         <Link to={props.del ? '/' : '/add-product'}>

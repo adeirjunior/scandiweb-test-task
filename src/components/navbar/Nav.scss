@@ -1,11 +1,16 @@
+$primary-color: #EF476F;
+$secundary-color: #1B9AAA;
+
+
+
 #navbarSty{
-    border-bottom: solid 5px #EF476F;
+    border-bottom: solid 5px $primary-color;
     box-sizing: border-box;
     padding-top: 3em;
     
     .container .navbar-brand{
         font-size: 3rem;
-        color: #EF476F;
+        color: $primary-color;
         user-select: none;
     }
   }
