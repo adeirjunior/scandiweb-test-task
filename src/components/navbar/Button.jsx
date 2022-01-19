@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -31,14 +31,22 @@ const Btn = styled.button`
     `}
 
 `
-function Button(props) {
-    return (
-        <Link to={props.del ? '/' : '/add-product'}>
-            <Btn id={props.del ? '#delete-product-btn' : ''} primary={props.del ? true : false}>
-                {props.del ? 'mass delete' : 'add'}
-            </Btn>
-        </Link>
-    )
+class Button extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+
+        }
+    }
+    render(){
+        return (
+            <Link to={this.props.del ? '/' : '/add-product'}>
+                <Btn id={this.props.del ? '#delete-product-btn' : ''} primary={this.props.del ? true : false}>
+                    {this.props.del ? 'mass delete' : 'add'}
+                </Btn>
+            </Link>
+        )
+    }
 }
 
 export default Button
