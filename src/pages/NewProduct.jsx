@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
+import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
 import axios from 'axios';
@@ -11,7 +12,7 @@ const Form = styled.form`
     justify-items: center;
     width: 100%;
 
-    #btn-mobile{
+    .btn-group{
         display: none;
 
         @media only screen and (max-width: 766px) {
@@ -136,8 +137,10 @@ class NewProduct extends Component {
         
     render(){
         return (
+            <>
+            <Navigator btnProps/>
             <Container id='newProductSty'>
-                <Form method="post">
+                <Form id='product-form' method="post">
                     <div id='fm-1'>
                         <label>
                             Sku
@@ -186,11 +189,12 @@ class NewProduct extends Component {
                             />
                         </label>
                     </div>
-                    <div id='btn-mobile'>
-                    <Button/><Button del/>
+                    <div className='btn-group'>
+                    <Button attr = 'save'/><Button attr = 'can'/>
                     </div>
                 </Form>
             </Container>
+            </>
         )
     }
 }

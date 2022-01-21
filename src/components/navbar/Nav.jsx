@@ -5,10 +5,10 @@ import { ReactComponent as Icon } from '../../assets/svg/Icon.svg';
 
 
 class Navigator extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            title: "Product List"
+            title: this.props.btnProps ? "Create Product" : "Product List"
         }
     }
     componentDidMount(){
@@ -26,8 +26,8 @@ class Navigator extends Component {
                         />
                         {' '}{this.state.title}</Navbar.Brand>
                     <ButtonGroup>
-                        <Button/>
-                        <Button del/>
+                        <Button attr={this.props.btnProps ? 'save' : 'add'}/>
+                        <Button attr={this.props.btnProps ? 'can' : 'del'}/>
                     </ButtonGroup>
                     
                 </Container>
@@ -35,5 +35,4 @@ class Navigator extends Component {
         )
     }
 }
-
 export default Navigator

@@ -40,9 +40,34 @@ class Button extends Component {
     }
     render(){
         return (
-            <Link to={this.props.del ? '/' : '/add-product'}>
-                <Btn id={this.props.del ? '#delete-product-btn' : ''} primary={this.props.del ? true : false}>
-                    {this.props.del ? 'mass delete' : 'add'}
+            <Link 
+            to={
+                this.props.attr === 'add' 
+                ? '/add-product' 
+                : '/'}>
+                <Btn 
+                id={
+                    this.props.attr === 'del' 
+                    ? '#delete-product-btn' 
+                    : ''
+                    } 
+                primary={
+                    this.props.attr === 'del' 
+                    ? true 
+                    : this.props.attr === 'can' 
+                    ? true 
+                    : false
+                    }
+                >
+                    {
+                    this.props.attr === 'del' 
+                    ? 'mass delete' 
+                    : this.props.attr === 'save' 
+                    ? 'save'
+                    : this.props.attr === 'can'
+                    ? 'cancel'
+                    : 'add' 
+                    }
                 </Btn>
             </Link>
         )

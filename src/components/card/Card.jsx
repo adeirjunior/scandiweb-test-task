@@ -44,7 +44,7 @@ const Checkbox = styled.div`
  	height: 3rem;
  	width: 3rem;
 
-    & > input[type="checkbox"]{
+    & > .delete-checkbox[type="checkbox"]{
         cursor: pointer;
         height: 100%;
         left: 0;
@@ -83,7 +83,7 @@ function CardBody() {
     return (
         <CardW>
             <Checkbox>
-                <input type="checkbox"/>
+                <input className='delete-checkbox' type="checkbox"/>
                 <span></span>    
             </Checkbox>
             <Card.Body>
