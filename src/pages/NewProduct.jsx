@@ -42,14 +42,7 @@ const Form = styled.form`
                 justify-items: center;
 
             }
-            input{
-                border: solid 3px #EF476F;
-                
-            }
-            input:focus{
-                outline: none;
-            }
-            input,select{
+            select{
                 margin-left: 6em;
                 border-radius: .5em;
 
@@ -70,7 +63,8 @@ const Form = styled.form`
                 color: white;
                 border: none;
                 padding: .5em 1.5em;
-                
+                cursor: pointer;
+
             }
         }
     }
@@ -80,6 +74,26 @@ const Form = styled.form`
     
     }
    
+`
+const Input = styled.input`
+    border: solid 3px #EF476F;
+    margin-left: 6em;
+    border-radius: .5em;
+
+    @media only screen and (max-width: 1150px){
+        margin-left: 2em;
+                
+    }
+    @media only screen and (max-width: 766px) {
+        margin-left: 1em;
+    }
+    @media only screen and (max-width: 470px){
+    margin-left: 0;
+    }
+
+    &:focus{
+                outline: none;
+            }
 `
 class NewProduct extends Component {
     constructor(){
@@ -106,6 +120,7 @@ class NewProduct extends Component {
                     }
                 }
             },
+            selectValue: "Select",
             dataSend: "",
             error: null
         }
@@ -113,7 +128,7 @@ class NewProduct extends Component {
     onSubmit(event){
         event.preventDefault();
         console.log(this.state);
-        const API_PATH = 'http://localhost/scandiweb-test-task/api/data/index.php';
+        const API_PATH = process.env.API_PATH;
         axios({
             method:'post',
             url: API_PATH,
@@ -133,7 +148,8 @@ class NewProduct extends Component {
             error: error.message
         }));
 
-        }
+    }
+    
         
     render(){
         return (
@@ -144,21 +160,25 @@ class NewProduct extends Component {
                     <div id='fm-1'>
                         <label>
                             Sku
-                            <input type="text" value={this.state.sku} onChange={ e => { this.setState({ sku: e.target.value })}}  name="sku" id="sku" />
+                            <Input type="text" value={this.state.sku} onChange={ e => { this.setState({ sku: e.target.value })}}  name="sku" id="sku" />
                         </label>
                         <label>
                             Name
-                            <input type="text" value={this.state.name} onChange={ e => { this.setState({ name: e.target.value })}}  name="name" id="name" />
+                            <Input type="text" value={this.state.name} onChange={ e => { this.setState({ name: e.target.value })}}  name="name" id="name" />
                         </label>
                         <label>
                             Price
-                            <input type="number" value={this.state.price} onChange={ e => { this.setState({ price: e.target.value })}} name="price" id="price" />
+                            <Input type="number" value={this.state.price} onChange={ e => { this.setState({ price: e.target.value })}} name="price" id="price" />
                         </label>
                         <label>
                             Types
-                            <select onChange={e => { this.setState({})}} name='types' id='productType'>
+                            <select 
+                            onChange={
+                                e => { 
+                                    this.setState({ selectValue: e.target.value })
+                                    console.log(e.target.value)}} name='types' id='productType'>
                                 <option 
-                                value="select"
+                                value="Select"
                                 >
                                     Select
                                 </option>
@@ -167,27 +187,40 @@ class NewProduct extends Component {
                                 >
                                     {this.state.type.dvd_disc.name}
                                 </option>
-                                <option value={this.state.type.book.name}>{this.state.type.book.name}</option>
-                                <option value={this.state.type.forniture.name}>{this.state.type.forniture.name}</option>
+                                <option 
+                                value={this.state.type.book.name}
+                                >
+                                    {this.state.type.book.name}
+                                </option>
+                                <option 
+                                value={this.state.type.forniture.name}
+                                >
+                                    {this.state.type.forniture.name}
+                                </option>
                             </select>  
                         </label>
                     </div>
-                    <div id='fm-2'>
-                        <label>
-                            Size
-                            <input 
-                            type="number" 
-                            value={this.state.type.dvd_disc.size} 
-                            onChange={ e => {
-                                this.setState( prevState => {
-                                    let type = Object.assign({}, prevState.type);
-                                    type.dvd_disc.size = e.target.value;
-                                    return type;
-                            })}}
-                            name="size" 
-                            id="price"
-                            />
-                        </label>
+                    <div id='fm-2' style={this.state.selectValue === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
+                        {this.state.selectValue === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
+                        {
+                            this.state.selectValue === 'DVD-disc' 
+                            ? (<label>Size<Input type='number'/></label>)
+                            : this.state.selectValue === 'Book' 
+                            ? (<label>Weight<Input type='number'/></label>)
+                            : this.state.selectValue === 'Forniture' 
+                            ? (<label>Width<Input type='number'/></label>)
+                            : ('')
+                        }
+                        {
+                            this.state.selectValue === 'Forniture' 
+                            ? (<label>Height<Input type='number'/></label>)
+                            : ''
+                        }
+                        {
+                            this.state.selectValue === 'Forniture' 
+                            ? (<label>Length<Input type='number'/></label>)
+                            : ''
+                        }
                     </div>
                     <div className='btn-group'>
                     <Button attr = 'save'/><Button attr = 'can'/>

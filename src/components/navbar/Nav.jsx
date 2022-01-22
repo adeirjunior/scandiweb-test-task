@@ -26,7 +26,7 @@ class Navigator extends Component {
                         />
                         {' '}{this.state.title}</Navbar.Brand>
                     <ButtonGroup>
-                        <Button attr={this.props.btnProps ? 'save' : 'add'}/>
+                        <Button type={this.props.btnProps ? 'submit' : ''} form={this.props.btnProps ? 'product-form' : ''} attr={this.props.btnProps ? 'save' : 'add'}/>
                         <Button attr={this.props.btnProps ? 'can' : 'del'}/>
                     </ButtonGroup>
                     
