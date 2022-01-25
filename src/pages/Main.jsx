@@ -5,7 +5,6 @@ import CardBody from '../components/card/Card';
 import './Main.scss';
 
 function Main() {
-
     return (
         <>
             <Navigator/>

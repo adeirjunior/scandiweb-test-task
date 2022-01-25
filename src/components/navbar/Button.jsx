@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -31,40 +31,45 @@ const Btn = styled.button`
     `}
 
 `
-class Button extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-
-        }
-    }
-    render(){
+function Button (props){
         return (
             <Link 
             to={
-                this.props.attr === 'add' 
+                props.attr === 'add' 
                 ? '/add-product' 
-                : '/'}>
+                : '/'}
+            >
                 <Btn 
+                onClick={()=>{console.log('clicked')}}
+                type={
+                    props.attr === 'save' 
+                    ? 'submit' 
+                    : ''
+                }
+                form={
+                    props.attr === 'save' 
+                    ? 'product-form' 
+                    : ''
+                }
                 id={
-                    this.props.attr === 'del' 
+                    props.attr === 'del' 
                     ? '#delete-product-btn' 
                     : ''
                     } 
                 primary={
-                    this.props.attr === 'del' 
+                    props.attr === 'del' 
                     ? true 
-                    : this.props.attr === 'can' 
+                    : props.attr === 'can' 
                     ? true 
                     : false
                     }
                 >
                     {
-                    this.props.attr === 'del' 
+                    props.attr === 'del' 
                     ? 'mass delete' 
-                    : this.props.attr === 'save' 
+                    : props.attr === 'save' 
                     ? 'save'
-                    : this.props.attr === 'can'
+                    : props.attr === 'can'
                     ? 'cancel'
                     : 'add' 
                     }
@@ -72,6 +77,5 @@ class Button extends Component {
             </Link>
         )
     }
-}
 
 export default Button
