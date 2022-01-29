@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
-import axios from 'axios';
+//import axios from 'axios';
 import Button from '../components/navbar/Button';
+import Footer from '../components/Footer';
 
 const Form = styled.form`
     display: inline-grid;
@@ -95,10 +96,8 @@ const Input = styled.input`
                 outline: none;
             }
 `
-class NewProduct extends Component {
-    constructor(){
-        super();
-        this.state = {
+function NewProduct (){
+    const [state,setState] = useState({
             sku: "",
             name: "",
             price: "",
@@ -123,9 +122,9 @@ class NewProduct extends Component {
             selectValue: "Select",
             dataSend: "",
             error: null
-        }
-    }
-    onSubmit(event){
+        })
+    
+    /*onSubmit(event){
         try{
             event.preventDefault();
             console.log(this.state);
@@ -152,105 +151,129 @@ class NewProduct extends Component {
             console.log(e.message)
         }
 
-    }
+    }*/
     
         
-    render(){
-        return (
-            <>
-            <Navigator btnProps/>
-            <Container id='newProductSty'>
-                <Form id='product-form' method="post">
-                    <div id='fm-1'>
+   
+    return (
+        <>
+        <Navigator btnProps/>
+        <Container id='newProductSty'>
+            <Form id='product-form' method="post">
+                <div id='fm-1'>
+                    <label>
+                        Sku
+                        <Input 
+                        type="text" 
+                        value={state.sku} 
+                        onChange={ 
+                            e => {
+                                setState(
+                                    prevState => {
+                                        return { ...prevState, sku: e.target.value } 
+                                    }
+                                ); 
+                                console.log(state.sku)
+                            }
+                        }  
+                        name="sku" 
+                        id="sku" 
+                        />
+                    </label>
+                    <label>
+                        Name
+                        <Input 
+                        type="text" 
+                        value={state.name} 
+                        onChange={ 
+                            e => {
+                                setState(
+                                    prevState => {
+                                        return { ...prevState, name: e.target.value } 
+                                    }
+                                ); 
+                                console.log(state.name)
+                            }
+                        }  
+                        name="name" 
+                        id="name" 
+                        />
+                    </label>
+                    <label>
+                        Price
+                        <Input 
+                        type="number" 
+                        value={state.price} 
+                        onChange={ 
+                            e => {
+                                setState(
+                                    prevState => {
+                                        return { 
+                                            ...prevState, 
+                                            price: e.target.value 
+                                        } 
+                                    }
+                                ); 
+                                console.log(`$${state.price}`)
+                            }
+                        }  
+                        name="price" 
+                        id="price" 
+                        />
+                    </label>
+                    <label>
+                        Types
+                        <select 
+                        onChange={
+                            e => { 
+                                setState(
+                                    prevState => {
+                                        return{
+                                            ...prevState,
+                                            selectValue: e.target.value 
+                                        }
+                                    }
+                                )
+                                console.log(e.target.value)}} name='types' id='productType'>
+                            <option 
+                            value="Select"
+                            >
+                                Select
+                            </option>
+                            <option 
+                            value={state.type.dvd_disc.name}
+                            >
+                                {state.type.dvd_disc.name}
+                            </option>
+                            <option 
+                            value={state.type.book.name}
+                            >
+                                {state.type.book.name}
+                            </option>
+                            <option 
+                            value={state.type.forniture.name}
+                            >
+                                {state.type.forniture.name}
+                            </option>
+                        </select>  
+                    </label>
+                </div>
+                <div id='fm-2' style={state.selectValue === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
+                    {state.selectValue === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
+                    {
+                        state.selectValue === 'DVD-disc' 
+                        ? (
                         <label>
-                            Sku
+                            Size
                             <Input 
-                            type="text" 
-                            value={this.state.sku} 
-                            onChange={ 
-                                e => {
-                                    this.setState({ sku: e.target.value }); 
-                                    console.log(this.state.sku)
-                                }
-                            }  
-                            name="sku" 
-                            id="sku" 
-                            />
-                        </label>
-                        <label>
-                            Name
-                            <Input 
-                            type="text" 
-                            value={this.state.name} 
-                            onChange={ 
-                                e => {
-                                    this.setState({ name: e.target.value }); 
-                                    console.log(this.state.name)
-                                }
-                            }  
-                            name="name" 
-                            id="name" 
-                            />
-                        </label>
-                        <label>
-                            Price
-                            <Input 
-                            type="number" 
-                            value={this.state.price} 
-                            onChange={ 
-                                e => { 
-                                    this.setState({ price: e.target.value }); 
-                                    console.log('$'+this.state.price)
-                                }
-                            } 
-                            name="price" 
-                            id="price" 
-                            />
-                        </label>
-                        <label>
-                            Types
-                            <select 
+                            type='number' 
+                            value={state.type.dvd_disc.size} 
                             onChange={
-                                e => { 
-                                    this.setState({ selectValue: e.target.value })
-                                    console.log(e.target.value)}} name='types' id='productType'>
-                                <option 
-                                value="Select"
-                                >
-                                    Select
-                                </option>
-                                <option 
-                                value={this.state.type.dvd_disc.name}
-                                >
-                                    {this.state.type.dvd_disc.name}
-                                </option>
-                                <option 
-                                value={this.state.type.book.name}
-                                >
-                                    {this.state.type.book.name}
-                                </option>
-                                <option 
-                                value={this.state.type.forniture.name}
-                                >
-                                    {this.state.type.forniture.name}
-                                </option>
-                            </select>  
-                        </label>
-                    </div>
-                    <div id='fm-2' style={this.state.selectValue === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
-                        {this.state.selectValue === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
-                        {
-                            this.state.selectValue === 'DVD-disc' 
-                            ? (
-                            <label>
-                                Size
-                                <Input 
-                                type='number' 
-                                value={this.state.type.dvd_disc.size} 
-                                onChange={
-                                    e => {
-                                        this.setState(
-                                            prevState => ({
+                                e => {
+                                    setState(
+                                        prevState => {
+                                            return{
+                                                ...prevState,
                                                 type: {
                                                     ...prevState.type,
                                                     dvd_disc:{
@@ -258,23 +281,26 @@ class NewProduct extends Component {
                                                         size: e.target.value
                                                     }
                                                 }
-                                            })
-                                        )
-                                        console.log(this.state.type.dvd_disc.size)
-                                    }
-                                }/>
-                            </label>)
-                            : this.state.selectValue === 'Book' 
-                            ? (
-                            <label>
-                                Weight
-                                <Input 
-                                type='number' 
-                                value={this.state.type.book.weight}
-                                onChange={
-                                    e => {
-                                        this.setState(
-                                            prevState => ({
+                                            }
+                                        }
+                                    )
+                                    console.log(state.type.dvd_disc.size)
+                                }
+                            }/>
+                        </label>)
+                        : state.selectValue === 'Book' 
+                        ? (
+                        <label>
+                            Weight
+                            <Input 
+                            type='number' 
+                            value={state.type.book.weight}
+                            onChange={
+                                e => {
+                                    setState(
+                                        prevState => {
+                                            return {
+                                                ...prevState,
                                                 type: {
                                                     ...prevState.type,
                                                     book:{
@@ -282,23 +308,26 @@ class NewProduct extends Component {
                                                         weight: e.target.value
                                                     }
                                                 }
-                                            })
-                                        )
-                                        console.log(this.state.type.book.weight)
-                                    }
-                                }/>
-                            </label>)
-                            : this.state.selectValue === 'Forniture' 
-                            ? (
-                            <label>
-                                Width
-                                <Input 
-                                type='number' 
-                                value={this.state.type.forniture.dimentions.width} 
-                                onChange={ 
-                                    e => {
-                                        this.setState(
-                                            prevState => ({
+                                            }
+                                        }
+                                    )
+                                    console.log(`${state.type.book.weight}Kg`)
+                                }
+                            }/>
+                        </label>)
+                        : state.selectValue === 'Forniture' 
+                        ? (
+                        <label>
+                            Width
+                            <Input 
+                            type='number' 
+                            value={state.type.forniture.dimentions.width} 
+                            onChange={ 
+                                e => {
+                                    setState(
+                                        prevState => {
+                                            return{
+                                                ...prevState,
                                                 type: {
                                                     ...prevState.type, 
                                                     forniture: {
@@ -310,27 +339,29 @@ class NewProduct extends Component {
                                                     }
                                                 }
                                             }
-                                            )
-                                        );
-                                        console.log(this.state.type.forniture.dimentions.width)
-                                    }
+                                        }
+                                    );
+                                    console.log(state.type.forniture.dimentions.width)
                                 }
-                                />
-                            </label>)
-                            : ('')
-                        }
-                        {
-                            this.state.selectValue === 'Forniture' 
-                            ? (
-                            <label>
-                                Height
-                                <Input 
-                                type='number' 
-                                value={this.state.type.forniture.dimentions.height}  
-                                onChange={ 
-                                    e => {
-                                        this.setState(
-                                            prevState => ({
+                            }
+                            />
+                        </label>)
+                        : ('')
+                    }
+                    {
+                        state.selectValue === 'Forniture' 
+                        ? (
+                        <label>
+                            Height
+                            <Input 
+                            type='number' 
+                            value={state.type.forniture.dimentions.height}  
+                            onChange={ 
+                                e => {
+                                    setState(
+                                        prevState => {
+                                            return{
+                                                ...prevState,
                                                 type: {
                                                     ...prevState.type,
                                                     forniture: {
@@ -342,27 +373,29 @@ class NewProduct extends Component {
                                                     }
                                                 }
                                             }
-                                            )
-                                        ); 
-                                        console.log(this.state.type.forniture.dimentions.height)
-                                    }
+                                        }
+                                    ); 
+                                    console.log(state.type.forniture.dimentions.height)
                                 }
-                                />
-                            </label>)
-                            : ''
-                        }
-                        {
-                            this.state.selectValue === 'Forniture' 
-                            ? (
-                            <label>
-                                Length
-                                <Input 
-                                type='number' 
-                                value={this.state.type.forniture.dimentions.length}  
-                                onChange={ 
-                                    e => {
-                                        this.setState(
-                                            prevState => ({
+                            }
+                            />
+                        </label>)
+                        : ''
+                    }
+                    {
+                        state.selectValue === 'Forniture' 
+                        ? (
+                        <label>
+                            Length
+                            <Input 
+                            type='number' 
+                            value={state.type.forniture.dimentions.length}  
+                            onChange={ 
+                                e => {
+                                    setState(
+                                        prevState => {
+                                            return{
+                                                ...prevState,
                                                 type: {
                                                     ...prevState.type,
                                                     forniture: {
@@ -374,24 +407,24 @@ class NewProduct extends Component {
                                                     }
                                                 }
                                             }
-                                            )
-                                        ); 
-                                        console.log(this.state.type.forniture.dimentions.length)
-                                    }
+                                        }
+                                    ); 
+                                    console.log(state.type.forniture.dimentions.length)
                                 }
-                                />
-                            </label>)
-                            : ''
-                        }
-                    </div>
-                    <div className='btn-group'>
-                    <Button onClick={this.onSubmit} attr = 'save'/><Button attr = 'can'/>
-                    </div>
-                </Form>
-            </Container>
-            </>
-        )
-    }
+                            }
+                            />
+                        </label>)
+                        : ''
+                    }
+                </div>
+                <div className='btn-group'>
+                    <Button attr = 'save'/><Button attr = 'can'/>
+                </div>
+            </Form>
+            <Footer/>
+        </Container>
+        </>
+    )  
 }
 
 export default NewProduct;

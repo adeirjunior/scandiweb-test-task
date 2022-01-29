@@ -21,6 +21,11 @@ $secundary-color: #1B9AAA;
         justify-content: center;
         align-items: center;
         justify-items: center;
+
+        .navbar-brand{
+            font-size: 2.7em;
+            transform: scale(.9);
+        }
     }
     
 }

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Card } from 'react-bootstrap';
+import axios from 'axios';
 
 const CardW = styled.div`
     color: white;
@@ -66,7 +67,9 @@ const Checkbox = styled.div`
             width: 100%;
             transition: background-color .15s;
         }
-
+        &:hover + span{
+            background-color: #89d8e2;
+        }
         &:checked + span{
             background-color: #1B9AAA;
         }
@@ -77,24 +80,110 @@ const Checkbox = styled.div`
 `
 
 function CardBody() {
+    const [data,setData] = useState({
+        sku: "UGUG7-OUGo-b7UG-ug78",
+        name: "Desk",
+        price: 340.5,
+        type: {
+            dvd_disc: {
+                size: ""
+            },
+            book: {
+                weight: ''
+            },
+            forniture: {
+                dimentions: {
+                    width: 12.5,
+                    height: 65,
+                    length: 34.5
+                }
+            }
+        },
+        dataSend: "",
+        error: null
+    })
 
-    
+    useEffect(() => {
+        try{
+            const API_PATH = 'http://localhost/scandiweb-test-task/api/data/index.php';
+            axios.get(API_PATH)
+            .then(result => {
+                console.log(result.data)
+                setData(
+                    prevData => {
+                        return{
+                            ...prevData,
+                            sku: result.sku,
+                            dataSend: result.send
+                        }
+                    }
+                )
+                console.log(data.dataSend)
+            })
+            .catch(e => setData({
+                error: e.message
+            }
+            ));
+        }catch(e){
+            console.log(e.message)
+        }
+    })
 
     return (
-        <CardW>
-            <Checkbox>
-                <input className='delete-checkbox' type="checkbox"/>
-                <span></span>    
-            </Checkbox>
-            <Card.Body>
-                <ul>
-                    <li><p>SKU</p></li>
-                    <li><p>NAME</p></li>
-                    <li><p>PRICE</p></li>
-                    <li><p>ATTRIBUTES</p></li>
-                </ul>
-            </Card.Body>
-        </CardW>
+        <>
+        {data.length > 0 && (
+            data.map((res) => {
+                return(
+                    <CardW>
+                        <Checkbox>
+                            <input className='delete-checkbox' type="checkbox"/>
+                            <span></span>    
+                        </Checkbox>
+                        <Card.Body>
+                            <ul>
+                                <li><p>{res.data.sku}</p></li>
+                                <li><p>{res.data.name}</p></li>
+                                <li><p>{`$${res.data.price}`}</p></li>
+                                <li>
+                                    <p>
+                                        {
+                                            res.data.type.book.weight !== '' && res.data.type.dvd_disc.size === '' && res.data.type.forniture.dimentions.width === ''
+                                            ? (`${res.data.type.book.weight}Kg`)
+                                            : ''
+                                        }
+                                        {
+                                            res.data.type.dvd_disc.size !== '' && res.data.type.forniture.dimentions.width === '' && res.data.type.book.weight === ''
+                                            ? (`${res.data.type.dvd_disc.size}Mb`)
+                                            : ''
+                                        }
+                                        {
+                                            res.data.type.forniture.dimentions.width !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
+                                            ? (`${res.data.type.forniture.dimentions.width}Cm`)
+                                            : ''
+                                        }
+                                    </p>
+                                    <p>
+                                        {
+                                            res.data.type.forniture.dimentions.height !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
+                                            ? (`${res.data.type.forniture.dimentions.height}Cm`)
+                                            : ''
+                                        }
+                                    </p>
+                                    <p>
+                                        {
+                                            res.data.type.forniture.dimentions.length !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
+                                            ? (`${res.data.type.forniture.dimentions.length}Cm`)
+                                            : ''
+                                        }
+                                    </p>
+                                </li>
+                            </ul>
+                        </Card.Body>
+                    </CardW>
+                )
+            })
+        )}
+        </>
     )
 }
 

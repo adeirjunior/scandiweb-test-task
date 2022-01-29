@@ -8,12 +8,16 @@
 
     $rest_json = file_get_contents("php://input");
     $_POST = json_decode($rest_json, true);
+    $sku = $_POST['sku'];
+    $name = $_POST['name'];
+    $price = $_POST['price'];
+    $type = $_POST['type'];
 
     $query = "INSERT INTO userfeedback (sku, name, price, type) VALUES (
-        '" . $_POST['sku'] . "',
-        '" . $_POST['name'] . "',
-        '" . $_POST['price'] . "',
-        '" . $_POST['type'] . "'
+        '" . $sku . "',
+        '" . $name . "',
+        '" . $price . "',
+        '" . $type . "'
         )";
 
     
