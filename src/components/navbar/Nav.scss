@@ -7,11 +7,11 @@ $secundary-color: #1B9AAA;
     border-bottom: solid 5px $primary-color;
     box-sizing: border-box;
     padding-top: 3em;
+    user-select: none;
     
     .container .navbar-brand{
         font-size: 3rem;
         color: $primary-color;
-        user-select: none;
     }
   }
 
@@ -24,6 +24,9 @@ $secundary-color: #1B9AAA;
 
         .navbar-brand{
             font-size: 2.7em;
+            transform: scale(.9);
+        }
+        .btn-group{
             transform: scale(.9);
         }
     }

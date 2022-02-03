@@ -13,6 +13,7 @@ const Ft = styled.footer`
     position: absolute;
     bottom: 0;
     left: 0;
+    user-select: none;
 `
 
 function Footer() {

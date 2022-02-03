@@ -1,6 +1,4 @@
 <?php
-    
-
     $dbHost = "localhost";
     $dbUser = "root";
     $dbPass = "";
@@ -8,9 +6,9 @@
     
 
     //connection to database
-    $conn = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
-    if($conn) {
-        echo "connection successful";
+    $con = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
+    if($con) {
+
     } else {
         die("Database connection Failed!");
     };

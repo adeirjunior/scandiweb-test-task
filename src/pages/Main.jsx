@@ -10,8 +10,8 @@ function Main() {
         <>
             <Navigator/>
             <Container id='mainGrid'>
-            <CardBody/>
-            <Footer/>
+                <CardBody/>
+                <Footer/>
             </Container>
         </>
     )

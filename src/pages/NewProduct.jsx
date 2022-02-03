@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
-//import axios from 'axios';
+import axios from 'axios';
 import Button from '../components/navbar/Button';
 import Footer from '../components/Footer';
 
@@ -21,6 +21,11 @@ const Form = styled.form`
             margin-top: 2em;
         }
 
+    }
+    #fm-1{
+        @media only screen and (max-width: 1150px){
+            padding: 3em 0;
+        }
     }
     #fm-1,#fm-2{
         display: inline-grid;
@@ -46,6 +51,11 @@ const Form = styled.form`
             select{
                 margin-left: 6em;
                 border-radius: .5em;
+                background-color: #EF476F;
+                color: white;
+                border: none;
+                padding: .5em 1.5em;
+                cursor: pointer;
 
                 @media only screen and (max-width: 1150px){
                 margin-left: 2em;
@@ -58,14 +68,6 @@ const Form = styled.form`
                     margin-left: 0;
 
             }
-            }
-            select{
-                background-color: #EF476F;
-                color: white;
-                border: none;
-                padding: .5em 1.5em;
-                cursor: pointer;
-
             }
         }
     }
@@ -101,63 +103,41 @@ function NewProduct (){
             sku: "",
             name: "",
             price: "",
-            type: {
-                dvd_disc: {
-                    name: "DVD-disc",
-                    size: "",
-                },
-                book: {
-                    name: "Book",
-                    weight: ""
-                },
-                forniture: {
-                    name: "Forniture",
-                    dimentions: {
-                        width: "",
-                        height: "",
-                        length: ""
-                    }
-                }
-            },
-            selectValue: "Select",
+            type: "Select",
+            size: "",
+            weight: "",
+            width: "",
+            height: "",
+            length: "",
             dataSend: "",
             error: null
         })
     
-    /*onSubmit(event){
-        try{
-            event.preventDefault();
-            console.log(this.state);
-            const API_PATH = process.env.API_PATH;
-            axios({
-                method:'post',
-                url: API_PATH,
-                headers: {
-                    'content-type': 'application/json'
-                },
-                data: this.state
-            })
-            .then(result => {
-                console.log(result.data)
-                this.setState({
-                    dataSend: result.data.send,
+        const onsubmit = async (e) => {
+            e.preventDefault();
+            console.log(state);
+            try{
+                await axios({
+                    method: 'post',
+                    url: 'http://localhost/scandiweb-test-task/api/data/addProducts.php',
+                    data: state
                 })
-                console.log(this.state)
-            })
-            .catch(e => this.setState({
-                error: e.message
-            }));
-        } catch(e){
-            console.log(e.message)
-        }
-
-    }*/
+                .then((res) => {
+                    console.log(JSON.stringify(res.data))
     
+                })
+                .catch((err) => {
+                    console.log(JSON.stringify(err))
+                });
+            } catch(e) {
+                console.log(e.message)
+            }
+        }
         
    
     return (
         <>
-        <Navigator btnProps/>
+        <Navigator btnData={state} btnProps/>
         <Container id='newProductSty'>
             <Form id='product-form' method="post">
                 <div id='fm-1'>
@@ -178,6 +158,7 @@ function NewProduct (){
                         }  
                         name="sku" 
                         id="sku" 
+                        required
                         />
                     </label>
                     <label>
@@ -197,6 +178,7 @@ function NewProduct (){
                         }  
                         name="name" 
                         id="name" 
+                        required
                         />
                     </label>
                     <label>
@@ -219,209 +201,183 @@ function NewProduct (){
                         }  
                         name="price" 
                         id="price" 
+                        required
                         />
                     </label>
                     <label>
                         Types
-                        <select 
+                        <select
                         onChange={
                             e => { 
                                 setState(
                                     prevState => {
                                         return{
                                             ...prevState,
-                                            selectValue: e.target.value 
+                                            type: e.target.value 
                                         }
                                     }
                                 )
-                                console.log(e.target.value)}} name='types' id='productType'>
+                                console.log(e.target.value)}} name='type' id='productType'>
                             <option 
                             value="Select"
                             >
                                 Select
                             </option>
                             <option 
-                            value={state.type.dvd_disc.name}
+                            value='DVD-disc'
                             >
-                                {state.type.dvd_disc.name}
+                                DVD-disc
                             </option>
                             <option 
-                            value={state.type.book.name}
+                            value='Book' 
                             >
-                                {state.type.book.name}
+                                Book
                             </option>
                             <option 
-                            value={state.type.forniture.name}
+                            value='Forniture'
                             >
-                                {state.type.forniture.name}
+                                Forniture
                             </option>
                         </select>  
                     </label>
                 </div>
-                <div id='fm-2' style={state.selectValue === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
-                    {state.selectValue === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
+                <div id='fm-2' style={state.type === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
+                    {state.type === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
                     {
-                        state.selectValue === 'DVD-disc' 
+                        state.type === 'DVD-disc' 
                         ? (
                         <label>
                             Size
                             <Input 
                             type='number' 
-                            value={state.type.dvd_disc.size} 
+                            value={state.size} 
                             onChange={
                                 e => {
                                     setState(
                                         prevState => {
                                             return{
                                                 ...prevState,
-                                                type: {
-                                                    ...prevState.type,
-                                                    dvd_disc:{
-                                                        ...prevState.type.dvd_disc,
-                                                        size: e.target.value
-                                                    }
-                                                }
+                                                size: e.target.value
                                             }
                                         }
                                     )
-                                    console.log(state.type.dvd_disc.size)
+                                    console.log(state.size)
                                 }
-                            }/>
+                            }
+                            name='size'
+                            required
+                            />
                         </label>)
-                        : state.selectValue === 'Book' 
+                        : state.type === 'Book' 
                         ? (
                         <label>
                             Weight
                             <Input 
                             type='number' 
-                            value={state.type.book.weight}
+                            value={state.weight}
                             onChange={
                                 e => {
                                     setState(
                                         prevState => {
                                             return {
                                                 ...prevState,
-                                                type: {
-                                                    ...prevState.type,
-                                                    book:{
-                                                        ...prevState.type.book,
-                                                        weight: e.target.value
-                                                    }
-                                                }
+                                                weight: e.target.value
                                             }
                                         }
                                     )
-                                    console.log(`${state.type.book.weight}Kg`)
+                                    console.log(`${state.weight}Kg`)
                                 }
-                            }/>
+                            }
+                            name='weight'
+                            required
+                            />
                         </label>)
-                        : state.selectValue === 'Forniture' 
+                        : state.type === 'Forniture' 
                         ? (
                         <label>
                             Width
                             <Input 
                             type='number' 
-                            value={state.type.forniture.dimentions.width} 
+                            value={state.width} 
                             onChange={ 
                                 e => {
                                     setState(
                                         prevState => {
                                             return{
                                                 ...prevState,
-                                                type: {
-                                                    ...prevState.type, 
-                                                    forniture: {
-                                                        ...prevState.type.forniture,
-                                                        dimentions:{
-                                                            ...prevState.type.forniture.dimentions,
-                                                            width: e.target.value
-                                                        }
-                                                    }
-                                                }
+                                                width: e.target.value
                                             }
                                         }
                                     );
-                                    console.log(state.type.forniture.dimentions.width)
+                                    console.log(state.width)
                                 }
                             }
+                            name='width'
+                            required
                             />
                         </label>)
                         : ('')
                     }
                     {
-                        state.selectValue === 'Forniture' 
+                        state.type === 'Forniture' 
                         ? (
                         <label>
                             Height
                             <Input 
                             type='number' 
-                            value={state.type.forniture.dimentions.height}  
+                            value={state.height}  
                             onChange={ 
                                 e => {
                                     setState(
                                         prevState => {
                                             return{
                                                 ...prevState,
-                                                type: {
-                                                    ...prevState.type,
-                                                    forniture: {
-                                                        ...prevState.type.forniture,
-                                                        dimentions:{
-                                                            ...prevState.type.forniture.dimentions,
-                                                            height: e.target.value
-                                                        }
-                                                    }
-                                                }
+                                                height: e.target.value
                                             }
                                         }
                                     ); 
-                                    console.log(state.type.forniture.dimentions.height)
+                                    console.log(state.height)
                                 }
                             }
+                            name='height'
+                            required
                             />
                         </label>)
                         : ''
                     }
                     {
-                        state.selectValue === 'Forniture' 
+                        state.type === 'Forniture' 
                         ? (
                         <label>
                             Length
                             <Input 
                             type='number' 
-                            value={state.type.forniture.dimentions.length}  
+                            value={state.length}  
                             onChange={ 
                                 e => {
                                     setState(
                                         prevState => {
                                             return{
                                                 ...prevState,
-                                                type: {
-                                                    ...prevState.type,
-                                                    forniture: {
-                                                        ...prevState.type.forniture,
-                                                        dimentions:{
-                                                            ...prevState.type.forniture.dimentions,
-                                                            length: e.target.value
-                                                        }
-                                                    }
-                                                }
+                                                length: e.target.value
                                             }
                                         }
                                     ); 
-                                    console.log(state.type.forniture.dimentions.length)
+                                    console.log(state.length)
                                 }
                             }
+                            name='length'
+                            required
                             />
                         </label>)
                         : ''
                     }
                 </div>
                 <div className='btn-group'>
-                    <Button attr = 'save'/><Button attr = 'can'/>
+                    <Button name='submit' onClick={e => onsubmit(e)} attr = 'save'/><Button attr = 'can'/>
                 </div>
+                <Footer/>
             </Form>
-            <Footer/>
         </Container>
         </>
     )  

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { Link } from 'react-router-dom'
 
 const Btn = styled.button`
     color: white;
@@ -33,19 +32,9 @@ const Btn = styled.button`
 `
 function Button (props){
         return (
-            <Link 
-            to={
-                props.attr === 'add' 
-                ? '/add-product' 
-                : '/'}
-            >
                 <Btn 
                 onClick={()=>{console.log('clicked')}}
-                type={
-                    props.attr === 'save' 
-                    ? 'submit' 
-                    : ''
-                }
+               
                 form={
                     props.attr === 'save' 
                     ? 'product-form' 
@@ -74,7 +63,6 @@ function Button (props){
                     : 'add' 
                     }
                 </Btn>
-            </Link>
         )
     }
 

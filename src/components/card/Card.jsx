@@ -80,109 +80,77 @@ const Checkbox = styled.div`
 `
 
 function CardBody() {
-    const [data,setData] = useState({
-        sku: "UGUG7-OUGo-b7UG-ug78",
-        name: "Desk",
-        price: 340.5,
-        type: {
-            dvd_disc: {
-                size: ""
-            },
-            book: {
-                weight: ''
-            },
-            forniture: {
-                dimentions: {
-                    width: 12.5,
-                    height: 65,
-                    length: 34.5
-                }
-            }
-        },
-        dataSend: "",
-        error: null
-    })
+    const [data,setData] = useState([])
 
     useEffect(() => {
         try{
-            const API_PATH = 'http://localhost/scandiweb-test-task/api/data/index.php';
-            axios.get(API_PATH)
-            .then(result => {
-                console.log(result.data)
-                setData(
-                    prevData => {
-                        return{
-                            ...prevData,
-                            sku: result.sku,
-                            dataSend: result.send
-                        }
-                    }
-                )
-                console.log(data.dataSend)
+            const API_PATH = 'http://localhost/scandiweb-test-task/api/data/products.php';
+            axios.get(API_PATH).then(res => res.data)
+            .then(data => {
+                console.log(data)
+                setData(data)
             })
-            .catch(e => setData({
-                error: e.message
-            }
-            ));
+            .catch(e => console.log(e));
         }catch(e){
             console.log(e.message)
         }
-    })
+    },[])
 
     return (
         <>
-        {data.length > 0 && (
-            data.map((res) => {
-                return(
-                    <CardW>
-                        <Checkbox>
-                            <input className='delete-checkbox' type="checkbox"/>
-                            <span></span>    
-                        </Checkbox>
-                        <Card.Body>
-                            <ul>
-                                <li><p>{res.data.sku}</p></li>
-                                <li><p>{res.data.name}</p></li>
-                                <li><p>{`$${res.data.price}`}</p></li>
-                                <li>
-                                    <p>
-                                        {
-                                            res.data.type.book.weight !== '' && res.data.type.dvd_disc.size === '' && res.data.type.forniture.dimentions.width === ''
-                                            ? (`${res.data.type.book.weight}Kg`)
-                                            : ''
-                                        }
-                                        {
-                                            res.data.type.dvd_disc.size !== '' && res.data.type.forniture.dimentions.width === '' && res.data.type.book.weight === ''
-                                            ? (`${res.data.type.dvd_disc.size}Mb`)
-                                            : ''
-                                        }
-                                        {
-                                            res.data.type.forniture.dimentions.width !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
-                                            ? (`${res.data.type.forniture.dimentions.width}Cm`)
-                                            : ''
-                                        }
-                                    </p>
-                                    <p>
-                                        {
-                                            res.data.type.forniture.dimentions.height !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
-                                            ? (`${res.data.type.forniture.dimentions.height}Cm`)
-                                            : ''
-                                        }
-                                    </p>
-                                    <p>
-                                        {
-                                            res.data.type.forniture.dimentions.length !== '' && res.data.type.dvd_disc.size === '' && res.data.type.book.weight === ''
-                                            ? (`${res.data.type.forniture.dimentions.length}Cm`)
-                                            : ''
-                                        }
-                                    </p>
-                                </li>
-                            </ul>
-                        </Card.Body>
-                    </CardW>
+        {
+            data.length > 0 && (
+                data.map((res, key) => (
+                        <CardW key={key}>
+                            <Checkbox>
+                                <input className='delete-checkbox' type="checkbox"/>
+                                <span></span>    
+                            </Checkbox>
+                            <Card.Body>
+                                <ul>
+                                    <li><p>{res.sku}</p></li>
+                                    <li><p>{res.name}</p></li>
+                                    <li><p>{`$${res.price}`}</p></li>
+                                    <li>
+                                        <p>
+                                            {
+                                                res.weight !== '' && res.size === null && res.width === null
+                                                ? (`${res.weight}Kg`)
+                                                : ''
+                                            }
+                                            {
+                                                res.size !== '' && res.width === null && res.weight === null
+                                                ? (`${res.size}Mb`)
+                                                : ''
+                                            }
+                                            {
+                                                res.width !== '' && res.size === null && res.weight === null
+                                                ? (`${res.width}Cm`)
+                                                : ''
+                                            }
+                                        </p>
+                                        <p>
+                                            {
+                                                res.height !== '' && res.size === null && res.weight === null
+                                                ? (`${res.height}Cm`)
+                                                : ''
+                                            }
+                                        </p>
+                                        <p>
+                                            {
+                                                res.length !== '' && res.size === null && res.weight === null
+                                                ? (`${res.length}Cm`)
+                                                : ''
+                                            }
+                                        </p>
+                                    </li>
+                                </ul>
+                            </Card.Body>
+                        </CardW>
+                    )
                 )
-            })
-        )}
+            )
+        }
         </>
     )
 }
