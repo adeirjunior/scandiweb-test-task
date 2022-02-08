@@ -32,14 +32,14 @@ const Btn = styled.button`
 `
 function Button (props){
         return (
-                <Btn 
-                onClick={()=>{console.log('clicked')}}
-               
+            <Btn 
                 form={
-                    props.attr === 'save' 
-                    ? 'product-form' 
+                    props.attr === 'save'
+                    ? 'product-form'
+                    : props.attr === 'del'
+                    ? 'delProducts'
                     : ''
-                }
+                    }
                 id={
                     props.attr === 'del' 
                     ? '#delete-product-btn' 
@@ -62,7 +62,7 @@ function Button (props){
                     ? 'cancel'
                     : 'add' 
                     }
-                </Btn>
+            </Btn>
         )
     }
 

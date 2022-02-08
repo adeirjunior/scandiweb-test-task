@@ -84,7 +84,7 @@ function CardBody() {
 
     useEffect(() => {
         try{
-            const API_PATH = 'http://localhost/scandiweb-test-task/api/data/products.php';
+            const API_PATH = 'http://localhost/scandiweb-test-task/api/getProducts.php';
             axios.get(API_PATH).then(res => res.data)
             .then(data => {
                 console.log(data)
@@ -103,46 +103,40 @@ function CardBody() {
                 data.map((res, key) => (
                         <CardW key={key}>
                             <Checkbox>
-                                <input className='delete-checkbox' type="checkbox"/>
+                                <input value={res.sku} name="delete-checkbox[]" className='delete-checkbox' type="checkbox"/>
                                 <span></span>    
                             </Checkbox>
                             <Card.Body>
                                 <ul>
                                     <li><p>{res.sku}</p></li>
                                     <li><p>{res.name}</p></li>
-                                    <li><p>{`$${res.price}`}</p></li>
+                                    <li><p>{`${res.price}$`}</p></li>
                                     <li>
-                                        <p>
-                                            {
-                                                res.weight !== '' && res.size === null && res.width === null
-                                                ? (`${res.weight}Kg`)
-                                                : ''
+                                        {
+                                        (() => {
+    
+                                            switch (res.type) {
+                                                case 'book':
+                                                return (
+                                                    <p> Weight: {res.weight}KG </p>
+                                                )
+                                            case 'dvd-disc':
+                                                return (
+                                                    <p> Size: {res.size}MB </p>
+                                                )
+                                                case 'furniture':
+                                                    return (
+                                                    <p> Dimension: {res.height}x{res.width}x{res.length} </p>
+                                                    )
+                                                default:
+                                                    break;
+                                            
                                             }
-                                            {
-                                                res.size !== '' && res.width === null && res.weight === null
-                                                ? (`${res.size}Mb`)
-                                                : ''
-                                            }
-                                            {
-                                                res.width !== '' && res.size === null && res.weight === null
-                                                ? (`${res.width}Cm`)
-                                                : ''
-                                            }
-                                        </p>
-                                        <p>
-                                            {
-                                                res.height !== '' && res.size === null && res.weight === null
-                                                ? (`${res.height}Cm`)
-                                                : ''
-                                            }
-                                        </p>
-                                        <p>
-                                            {
-                                                res.length !== '' && res.size === null && res.weight === null
-                                                ? (`${res.length}Cm`)
-                                                : ''
-                                            }
-                                        </p>
+                                
+                                        }
+                                        )()
+                                        }
+
                                     </li>
                                 </ul>
                             </Card.Body>

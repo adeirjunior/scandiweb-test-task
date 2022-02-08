@@ -2,35 +2,12 @@ import React from 'react';
 import { Container, Navbar, ButtonGroup} from 'react-bootstrap';
 import Button from './Button';
 import './Nav.scss';
-import axios from 'axios';
 import { ReactComponent as Icon } from '../../assets/svg/Icon.svg';
 import { Link } from 'react-router-dom';
 
 function Navigator(props) {
     const state = {
         title: props.btnProps ? "Create Product" : "Product List"
-    }
-    const data = props.btnData;
-
-    const onsubmit = async (e) => {
-        e.preventDefault();
-        console.log(state);
-        try{
-            await axios({
-                method: 'post',
-                url: 'http://localhost/scandiweb-test-task/api/data/addProducts.php',
-                data: data
-            })
-            .then((res) => {
-                console.log(JSON.stringify(res.data))
-
-            })
-            .catch((err) => {
-                console.log(JSON.stringify(err))
-            });
-        } catch(e) {
-            console.log(e.message)
-        }
     }
 
     return(

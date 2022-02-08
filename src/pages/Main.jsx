@@ -9,10 +9,12 @@ function Main() {
     return (
         <>
             <Navigator/>
-            <Container id='mainGrid'>
-                <CardBody/>
-                <Footer/>
-            </Container>
+            <form id='delProducts' method='post' action="http://localhost/scandiweb-test-task/api/deleteProducts.php">
+                <Container id='mainGrid'>
+                    <CardBody/>
+                    <Footer/>
+                </Container>
+            </form>
         </>
     )
 }

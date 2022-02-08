@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
-import axios from 'axios';
 import Button from '../components/navbar/Button';
 import Footer from '../components/Footer';
 
@@ -99,114 +98,30 @@ const Input = styled.input`
             }
 `
 function NewProduct (){
-    const [state,setState] = useState({
-            sku: "",
-            name: "",
-            price: "",
-            type: "Select",
-            size: "",
-            weight: "",
-            width: "",
-            height: "",
-            length: "",
-            dataSend: "",
-            error: null
-        })
-    
-        const onsubmit = async (e) => {
-            e.preventDefault();
-            console.log(state);
-            try{
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost/scandiweb-test-task/api/data/addProducts.php',
-                    data: state
-                })
-                .then((res) => {
-                    console.log(JSON.stringify(res.data))
-    
-                })
-                .catch((err) => {
-                    console.log(JSON.stringify(err))
-                });
-            } catch(e) {
-                console.log(e.message)
-            }
-        }
-        
+    const [state,setState] = useState({type: "Select",})
    
     return (
         <>
-        <Navigator btnData={state} btnProps/>
+        <Navigator btnProps/>
         <Container id='newProductSty'>
-            <Form id='product-form' method="post">
+            <Form id='product-form' method="post" action='http://localhost/scandiweb-test-task/api/addProducts.php'>
                 <div id='fm-1'>
-                    <label>
+                    <label htmlFor="sku">
                         Sku
-                        <Input 
-                        type="text" 
-                        value={state.sku} 
-                        onChange={ 
-                            e => {
-                                setState(
-                                    prevState => {
-                                        return { ...prevState, sku: e.target.value } 
-                                    }
-                                ); 
-                                console.log(state.sku)
-                            }
-                        }  
-                        name="sku" 
-                        id="sku" 
-                        required
-                        />
+                        <Input type="text" name="sku" id="sku" required/>
                     </label>
-                    <label>
+                    <label htmlFor="name">
                         Name
-                        <Input 
-                        type="text" 
-                        value={state.name} 
-                        onChange={ 
-                            e => {
-                                setState(
-                                    prevState => {
-                                        return { ...prevState, name: e.target.value } 
-                                    }
-                                ); 
-                                console.log(state.name)
-                            }
-                        }  
-                        name="name" 
-                        id="name" 
-                        required
-                        />
+                        <Input type="text" name="name" id="name" required/>
                     </label>
-                    <label>
+                    <label htmlFor="price">
                         Price
-                        <Input 
-                        type="number" 
-                        value={state.price} 
-                        onChange={ 
-                            e => {
-                                setState(
-                                    prevState => {
-                                        return { 
-                                            ...prevState, 
-                                            price: e.target.value 
-                                        } 
-                                    }
-                                ); 
-                                console.log(`$${state.price}`)
-                            }
-                        }  
-                        name="price" 
-                        id="price" 
-                        required
-                        />
+                        <Input type="number" name="price" id="price" step="0.01" required/>
                     </label>
-                    <label>
-                        Types
+                    <label htmlFor="productType">
+                        Type
                         <select
+                        value={state.type}
                         onChange={
                             e => { 
                                 setState(
@@ -217,26 +132,22 @@ function NewProduct (){
                                         }
                                     }
                                 )
-                                console.log(e.target.value)}} name='type' id='productType'>
-                            <option 
-                            value="Select"
-                            >
+                                console.log(e.target.value)}
+                            } 
+                        name='type' 
+                        id='productType'
+                        >
+                            <option value="Select" defaultValue>
                                 Select
                             </option>
-                            <option 
-                            value='DVD-disc'
-                            >
+                            <option value='dvd-disc'>
                                 DVD-disc
                             </option>
-                            <option 
-                            value='Book' 
-                            >
+                            <option value='book'>
                                 Book
                             </option>
-                            <option 
-                            value='Forniture'
-                            >
-                                Forniture
+                            <option value='furniture'>
+                                Furniture
                             </option>
                         </select>  
                     </label>
@@ -244,137 +155,49 @@ function NewProduct (){
                 <div id='fm-2' style={state.type === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
                     {state.type === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
                     {
-                        state.type === 'DVD-disc' 
-                        ? (
-                        <label>
-                            Size
-                            <Input 
-                            type='number' 
-                            value={state.size} 
-                            onChange={
-                                e => {
-                                    setState(
-                                        prevState => {
-                                            return{
-                                                ...prevState,
-                                                size: e.target.value
-                                            }
-                                        }
-                                    )
-                                    console.log(state.size)
-                                }
-                            }
-                            name='size'
-                            required
-                            />
-                        </label>)
-                        : state.type === 'Book' 
-                        ? (
-                        <label>
-                            Weight
-                            <Input 
-                            type='number' 
-                            value={state.weight}
-                            onChange={
-                                e => {
-                                    setState(
-                                        prevState => {
-                                            return {
-                                                ...prevState,
-                                                weight: e.target.value
-                                            }
-                                        }
-                                    )
-                                    console.log(`${state.weight}Kg`)
-                                }
-                            }
-                            name='weight'
-                            required
-                            />
-                        </label>)
-                        : state.type === 'Forniture' 
-                        ? (
-                        <label>
-                            Width
-                            <Input 
-                            type='number' 
-                            value={state.width} 
-                            onChange={ 
-                                e => {
-                                    setState(
-                                        prevState => {
-                                            return{
-                                                ...prevState,
-                                                width: e.target.value
-                                            }
-                                        }
-                                    );
-                                    console.log(state.width)
-                                }
-                            }
-                            name='width'
-                            required
-                            />
-                        </label>)
-                        : ('')
+                    (() => {
+                        switch (state.type) {
+                            case 'book':
+                                return (
+                                    <label htmlFor="weight">
+                                        Weight
+                                        <Input type='number' name='weight' id="weight" step="0.1" required/>
+                                    </label>
+                                )
+                            case 'dvd-disc':
+                                return (
+                                    <label htmlFor="size">
+                                        Size
+                                        <Input type='number' name='size' id="size" step="0.1" required/>
+                                    </label>
+                                )
+                            case 'furniture':
+                                return (
+                                    <>
+                                        <label htmlFor="width">
+                                            Width
+                                            <Input type='number' name='width' id="width" step="0.1" required/>
+                                        </label>
+                                        <label htmlFor="height">
+                                            Height
+                                            <Input type='number' name='height' id="height" step="0.1" required/>
+                                        </label>
+                                        <label htmlFor="length">
+                                            Length
+                                            <Input type='number' name='length' id="length" step="0.1" required/>
+                                        </label>
+                                    </>
+                                )
+                            default:
+                                break;
+                                        
+                        }      
                     }
-                    {
-                        state.type === 'Forniture' 
-                        ? (
-                        <label>
-                            Height
-                            <Input 
-                            type='number' 
-                            value={state.height}  
-                            onChange={ 
-                                e => {
-                                    setState(
-                                        prevState => {
-                                            return{
-                                                ...prevState,
-                                                height: e.target.value
-                                            }
-                                        }
-                                    ); 
-                                    console.log(state.height)
-                                }
-                            }
-                            name='height'
-                            required
-                            />
-                        </label>)
-                        : ''
-                    }
-                    {
-                        state.type === 'Forniture' 
-                        ? (
-                        <label>
-                            Length
-                            <Input 
-                            type='number' 
-                            value={state.length}  
-                            onChange={ 
-                                e => {
-                                    setState(
-                                        prevState => {
-                                            return{
-                                                ...prevState,
-                                                length: e.target.value
-                                            }
-                                        }
-                                    ); 
-                                    console.log(state.length)
-                                }
-                            }
-                            name='length'
-                            required
-                            />
-                        </label>)
-                        : ''
+                    )()
                     }
                 </div>
                 <div className='btn-group'>
-                    <Button name='submit' onClick={e => onsubmit(e)} attr = 'save'/><Button attr = 'can'/>
+                    <Button attr = 'save'/><Button attr = 'can'/>
                 </div>
                 <Footer/>
             </Form>
