@@ -61,7 +61,7 @@ const Checkbox = styled.div`
             position: relative;
             z-index: 0;
             margin: -3.2em 0 0 1em;
-            border-radius: 50%;
+            border-radius: 25%;
             background-color: white;
             height: 100%;
             width: 100%;
