@@ -115,7 +115,7 @@ function NewProduct (){
                         <Input type="text" name="name" id="name" required/>
                     </label>
                     <label htmlFor="price">
-                        Price
+                        Price ($)
                         <Input type="number" name="price" id="price" step="0.01" required/>
                     </label>
                     <label htmlFor="productType">
@@ -160,14 +160,14 @@ function NewProduct (){
                             case 'book':
                                 return (
                                     <label htmlFor="weight">
-                                        Weight
+                                        Weight (KG)
                                         <Input type='number' name='weight' id="weight" step="0.1" required/>
                                     </label>
                                 )
                             case 'dvd-disc':
                                 return (
                                     <label htmlFor="size">
-                                        Size
+                                        Size (MB)
                                         <Input type='number' name='size' id="size" step="0.1" required/>
                                     </label>
                                 )
@@ -175,15 +175,15 @@ function NewProduct (){
                                 return (
                                     <>
                                         <label htmlFor="width">
-                                            Width
+                                            Width (CM)
                                             <Input type='number' name='width' id="width" step="0.1" required/>
                                         </label>
                                         <label htmlFor="height">
-                                            Height
+                                            Height (CM)
                                             <Input type='number' name='height' id="height" step="0.1" required/>
                                         </label>
                                         <label htmlFor="length">
-                                            Length
+                                            Length (CM)
                                             <Input type='number' name='length' id="length" step="0.1" required/>
                                         </label>
                                     </>
