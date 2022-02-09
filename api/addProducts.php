@@ -1,9 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 require_once './database.php';
 require_once './dao/bookDAO.php';
@@ -26,7 +21,7 @@ if(isset($_POST['type']) && !empty($_POST['type'])){
             $book->weight = $_POST['weight'];
             $dao = new BookDAO($con);
             $dao->save($book);
-            header("location: http://localhost:3000");
+            header("location: /");
             break;
         case 'dvd-disc':
             $dvdDisc = new DvdDisc();
@@ -37,7 +32,7 @@ if(isset($_POST['type']) && !empty($_POST['type'])){
             $dvdDisc->size = $_POST['size'];
             $dao = new DvdDiscDAO($con);
             $dao->save($dvdDisc);
-            header("location: http://localhost:3000");
+            header("location: /");
             break;
         case 'furniture':
             $furniture = new Furniture();
@@ -50,7 +45,7 @@ if(isset($_POST['type']) && !empty($_POST['type'])){
             $furniture->length = $_POST['length'];
             $dao = new FurnitureDAO($con);
             $dao->save($furniture);
-            header("location: http://localhost:3000");
+            header("location: /");
             break;
         default:
             echo 'Product type not found';

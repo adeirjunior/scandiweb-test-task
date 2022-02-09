@@ -37,7 +37,7 @@ const Form = styled.form`
         font-weight: bold;
         text-transform: uppercase;
 
-        label{
+    .inputGrid{
             display: inline-grid;
             grid-template-columns: 20% 80%;
             align-items: center;
@@ -104,22 +104,22 @@ function NewProduct (){
         <>
         <Navigator btnProps/>
         <Container id='newProductSty'>
-            <Form id='product-form' method="post" action='http://localhost/scandiweb-test-task/api/addProducts.php'>
-                <div id='fm-1'>
-                    <label htmlFor="sku">
-                        Sku
+            <Form id='product-form' method="post" action={process.env.REACT_APP_DOMAIN + '/api/addProducts.php'}>
+                <div className='inputGrid' id='fm-1'>
+                    <div className='inputGrid'>
+                   <label htmlFor="sku">Sku</label>
                         <Input type="text" name="sku" id="sku" required/>
-                    </label>
-                    <label htmlFor="name">
-                        Name
+                    </div>
+                    <div className='inputGrid'>
+                    <label htmlFor="name">Name</label>
                         <Input type="text" name="name" id="name" required/>
-                    </label>
-                    <label htmlFor="price">
-                        Price ($)
+                    </div>
+                    <div className='inputGrid'>
+                    <label htmlFor="price">Price ($)</label>
                         <Input type="number" name="price" id="price" step="0.01" required/>
-                    </label>
-                    <label htmlFor="productType">
-                        Type
+                    </div>
+                    <div className='inputGrid'>
+                    <label htmlFor="productType">Type</label>
                         <select
                         value={state.type}
                         onChange={
@@ -150,7 +150,7 @@ function NewProduct (){
                                 Furniture
                             </option>
                         </select>  
-                    </label>
+                    </div>
                 </div>
                 <div id='fm-2' style={state.type === 'Select' ? {backgroundColor: '#EF476F',width:'90%', textAlign: 'center'} : {}}>
                     {state.type === 'Select' ? (<p style={{color: 'white'}}>Please Select a Product Type</p>) : ''}
@@ -159,33 +159,42 @@ function NewProduct (){
                         switch (state.type) {
                             case 'book':
                                 return (
-                                    <label htmlFor="weight">
-                                        Weight (KG)
-                                        <Input type='number' name='weight' id="weight" step="0.1" required/>
-                                    </label>
+                                    <>
+                                        <div className='inputGrid'>
+                                           <label htmlFor="weight">Weight (KG)</label>
+                                            <Input type='number' name='weight' id="weight" step="0.1" required/>
+                                        </div>
+                                        <p>Please, provide weight</p>
+                                    </>
                                 )
                             case 'dvd-disc':
                                 return (
-                                    <label htmlFor="size">
-                                        Size (MB)
-                                        <Input type='number' name='size' id="size" step="0.1" required/>
-                                    </label>
+                                    <>
+                                        <div className='inputGrid'>
+                                            <label htmlFor="size">Size (MB)</label>
+                                            <Input type='number' name='size' id="size" step="0.1" required/>
+                                        </div>
+                                        <p>Please, provide size</p>
+                                    </>
                                 )
                             case 'furniture':
                                 return (
                                     <>
-                                        <label htmlFor="width">
-                                            Width (CM)
+                                        <div className='inputGrid'>
+                                            <label htmlFor="width">Width (CM)</label>
                                             <Input type='number' name='width' id="width" step="0.1" required/>
-                                        </label>
-                                        <label htmlFor="height">
-                                            Height (CM)
+                                            
+                                        </div>
+                                        <div className='inputGrid'>
+                                            <label htmlFor="height">Height (CM)</label>
                                             <Input type='number' name='height' id="height" step="0.1" required/>
-                                        </label>
-                                        <label htmlFor="length">
-                                            Length (CM)
+                                            
+                                        </div>
+                                        <div className='inputGrid'>
+                                            <label htmlFor="length">Length (CM)</label>
                                             <Input type='number' name='length' id="length" step="0.1" required/>
-                                        </label>
+                                        </div>
+                                        <p>Please, provide dimensions</p>
                                     </>
                                 )
                             default:

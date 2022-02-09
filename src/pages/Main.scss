@@ -5,11 +5,14 @@
     grid-template-rows: 425px;
     min-width: 100%;
     position: relative;
-    min-height: 80.65%;
+    min-height: 100%;
     align-items: center;
     justify-content: center;
     justify-items: center;
     gap: 30px;
+}
+#delProducts {
+    height: 80.65%;
 }
 
 @media only screen and (max-width: 1350px){

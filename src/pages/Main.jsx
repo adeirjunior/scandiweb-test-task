@@ -9,7 +9,7 @@ function Main() {
     return (
         <>
             <Navigator/>
-            <form id='delProducts' method='post' action="http://localhost/scandiweb-test-task/api/deleteProducts.php">
+            <form id='delProducts' method='post' action={process.env.REACT_APP_DOMAIN + '/api/deleteProducts.php'}>
                 <Container id='mainGrid'>
                     <CardBody/>
                     <Footer/>
