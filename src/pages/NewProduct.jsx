@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
+import { Link } from 'react-router-dom';
 import Button from '../components/navbar/Button';
 import Footer from '../components/Footer';
 
@@ -197,7 +198,7 @@ function NewProduct (){
                     }
                 </div>
                 <div className='btn-group'>
-                    <Button attr = 'save'/><Button attr = 'can'/>
+                    <Button attr = 'save'/><Link to='/'><Button attr = 'can'/></Link>
                 </div>
                 <Footer/>
             </Form>
