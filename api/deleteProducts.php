@@ -3,10 +3,11 @@
     require_once './dao/productDAO.php';
     require_once './database.php';
 
-    
-    $dao = new ProductDAO($con);
+    $db = new Database;
+    $dao = new ProductDAO($db -> con);
+
     if(isset($_POST['delete-checkbox'])){
         $dao->deleteAllById($_POST['delete-checkbox']);
     }
-    header("location: /");
+    header("location: http://localhost:3000/");
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Navigator from '../components/navbar/Nav';
 import { Container } from 'react-bootstrap';
 import './NewProduct.scss';
+import { Link } from 'react-router-dom';
 import Button from '../components/navbar/Button';
 import Footer from '../components/Footer';
 
@@ -164,7 +165,7 @@ function NewProduct (){
                                            <label htmlFor="weight">Weight (KG)</label>
                                             <Input type='number' name='weight' id="weight" step="0.1" required/>
                                         </div>
-                                        <p>Please, provide weight</p>
+                                        <p style={{textAlign: 'center'}}>Please, provide weight</p>
                                     </>
                                 )
                             case 'dvd-disc':
@@ -174,7 +175,7 @@ function NewProduct (){
                                             <label htmlFor="size">Size (MB)</label>
                                             <Input type='number' name='size' id="size" step="0.1" required/>
                                         </div>
-                                        <p>Please, provide size</p>
+                                        <p style={{textAlign: 'center'}}>Please, provide size</p>
                                     </>
                                 )
                             case 'furniture':
@@ -194,7 +195,7 @@ function NewProduct (){
                                             <label htmlFor="length">Length (CM)</label>
                                             <Input type='number' name='length' id="length" step="0.1" required/>
                                         </div>
-                                        <p>Please, provide dimensions</p>
+                                        <p style={{textAlign: 'center'}}>Please, provide dimensions</p>
                                     </>
                                 )
                             default:
@@ -206,7 +207,7 @@ function NewProduct (){
                     }
                 </div>
                 <div className='btn-group'>
-                    <Button attr = 'save'/><Button attr = 'can'/>
+                    <Button attr = 'save'/><Link to='/'><Button attr = 'can'/></Link>
                 </div>
                 <Footer/>
             </Form>

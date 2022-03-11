@@ -1,14 +1,18 @@
 <?php
-    $dbHost = "localhost";
-    $dbUser = "id18420470_master";
-    $dbPass = "l=R8MQBj4KGLe=qz";
-    $dbName = "id18420470_scandiweb_database";
-    
+define('DB_HOST',"localhost");
+define('DB_USER',"root");
+define('DB_PASS',"");
+define('DB_NAME',"scandiweb_task");
 
-    //connection to database
-    $con = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
-    if($con) {
-    } else {
-        die("Database connection Failed!");
-    };
 
+class Database {
+    public function __construct() {
+
+        $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+        if (!$con) {
+            die("Database connection Failed!");
+        } 
+        return $this -> con = $con;
+    }
+}
