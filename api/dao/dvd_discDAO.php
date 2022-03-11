@@ -1,6 +1,6 @@
 <?php
-
-    class DvdDiscDAO {
+    require_once dirname(__FILE__) . '/dao.php';
+    class DvdDiscDAO  implements DAO {
 
         private $con;
 

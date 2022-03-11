@@ -1,7 +1,7 @@
 <?php
+    require_once dirname(__FILE__) . '/dao.php';
 
-
-    class BookDAO{
+    class BookDAO implements DAO {
 
         private $con;
 

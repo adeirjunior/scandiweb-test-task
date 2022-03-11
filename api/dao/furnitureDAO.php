@@ -1,7 +1,7 @@
 <?php
-   
+    require_once dirname(__FILE__) . '/dao.php';
 
-    class FurnitureDAO{
+    class FurnitureDAO  implements DAO {
 
         private $con;
 
