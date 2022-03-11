@@ -84,7 +84,7 @@ function CardBody() {
 
     useEffect(() => {
         try{
-            const API_PATH = 'http://localhost/scandiweb-test-task/api/getProducts.php';
+            const API_PATH = process.env.REACT_APP_DOMAIN + '/api/getProducts.php';
             axios.get(API_PATH).then(res => res.data)
             .then(data => {
                 console.log(data)
